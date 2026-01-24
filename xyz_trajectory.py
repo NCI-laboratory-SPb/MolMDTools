@@ -11,6 +11,7 @@ class XYZ_Trajectory:
     Parameters:
     steps : list
     List of objects Molecul. One step - one molecule.
+    
     """
 
     def __init__(self, steps):
