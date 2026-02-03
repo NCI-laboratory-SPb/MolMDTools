@@ -1,11 +1,11 @@
 import time
 
-from files_translator import Files_Translator
+from xyz_trajectory import XYZ_Trajectory
+from hydrogen_bond import Hydrogen_Bonds, Hydrogen_Bond, Colvars_Lists
 
 st = time.time()
-file_path = r"/home/mark/Desktop/VladimirR/Cooperativity_MLP/Two_Bonds/Amidines/amidines_1.dump"
 
-Files_Translator.dump2xyz(file_path)
+
 
 ft = time.time()
 print(ft-st)

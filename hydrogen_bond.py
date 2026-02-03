@@ -1,11 +1,14 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class Hydrogen_Bond:
     """Class Hydrogen_Bond.
     
     Parameters:
     atoms : list
-    List of objects Atom: [Atom-donor, Atom-Hydrogen, Atom-Axceptor]. Sequence is important for calculation coolvar. 
+    List of objects Atom: [Atom-donor, Atom-Hydrogen, Atom-Axceptor]. Sequence is important for calculation coolvar.
+    Warning!!! Numeration starts from 0: if number of atom in chemcraft = 20, you should input 19.
     """
 
     def __init__(self, atoms):
@@ -54,13 +57,13 @@ class Hydrogen_Bonds:
         return self.__h_bonds
 
     @property
-    def colvars_lists(self):
-        """Return obj Colvars_Lists"""
-        colvars_lists = []
+    def colvars_list(self):
+        """Return obj Colvars_Lists of list of one colvar"""
+        colvars_list = []
         h_bonds = self.h_bonds
         for h_bond in h_bonds:
-            colvars_lists.append(h_bond.colvar)
-        return Colvars_Lists(colvars_lists)
+            colvars_list.append(h_bond.colvar)
+        return Colvars_Lists(colvars_list)
 
 
 class Colvars_Lists:
@@ -92,3 +95,19 @@ class Colvars_Lists:
         """Translation_matrix - np.arrey. Translate colvars and retrun new np.arrey of colvars"""
         new_lst = ((self.colvars_lsts.T)@translation_matrix).T
         return Colvars_Lists(new_lst)
+    
+    def colvars_plot(self):
+        """Draw graphs of density of distribution of colvars"""
+        colors = ["black", "red", "blue", "green"]
+        plt.figure(figsize=(10, 6))
+
+        clvs = self.colvars_lsts
+        
+        if type(clvs[0]) != list:
+            sns.kdeplot(clvs, color='black')
+        
+        else:
+            for ind, clv in enumerate(clvs):
+                sns.kdeplot(clv, color=colors[ind%4])
+        
+        plt.show()
