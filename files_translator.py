@@ -5,7 +5,6 @@ class Files_Translator:
 
     """
 
-    @classmethod
     @staticmethod
     def dump2xyz(filename, final_filename = None, atoms_codes=None):
         mol = 0
