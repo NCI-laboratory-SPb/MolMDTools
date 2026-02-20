@@ -49,7 +49,7 @@ class XYZ_Trajectory:
         data = file.readlines()
         steps = []
 
-        if len(data[0].split()) == 1 and 'time' in data[1] or 'generated' in data[1]:
+        if len(data[0].split()) == 1 and 'time' in data[1].lower() or 'generated' in data[1].lower():
             num_atoms = int(data[0])
             steps_num = int(len(data)/(num_atoms+2))
             

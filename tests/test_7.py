@@ -6,7 +6,9 @@ from files_translator import Files_Translator
 
 st = time.time()
 
-file_name = "Z_anti_Z_anti_MTD_REFTRAJ-pos-1.xyz"
+Files_Translator.dump2xyz(filename="amidines_full.dump", final_filename="amidines_25ns.xyz")
+
+file_name = "amidines_25ns.xyz"
 traj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_name)
 
 print(len(traj.steps))
@@ -40,7 +42,7 @@ data = iter(["".join([str(i), str(round(HB1_cov_dist[i], 2)).rjust(10), str(roun
                  str(round(HB1_tors_ang[i], 2)).rjust(10), str(round(HB2_tors_ang[i], 2)).rjust(10),
                  str(round(HB1_clvs1[i], 2)).rjust(10), str(round(HB2_clvs1[i], 2)).rjust(10), "\n"]) for i in range(len_data)])
 
-with open("BA_Z_anti_Z_anti_MTD.csv", "w") as file:
+with open("amidines_5_5ns.csv", "w") as file:
     file.write("No" + "r(D, H)1" + "r(D, H)2" + "r(H, A)1" + "r(H, A)2" + "angle(D, H, A)1" + "angle(D, H, A)2" + "tors_angl(N, C, A, H)1" + "tors_angl(N, C, A, H)2" + "clv1_HB1" + "clv1_HB2" + "\n")
     for i in range(len_data):
         file.write(next(data))
