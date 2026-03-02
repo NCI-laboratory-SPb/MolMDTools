@@ -49,5 +49,5 @@ from .atom import Atom
 from .molecule import Molecule
 from .xyz_trajectory import XYZ_Trajectory
 from .hydrogen_bond import Hydrogen_Bond, Hydrogen_Bonds
-from .inp_file_generator import Calc_Data_Inp
+from .calc_data_inp import Calc_Data_Inp
 from .science_plot import Science_Plot
