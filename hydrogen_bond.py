@@ -20,14 +20,14 @@ class Hydrogen_Bond:
         return self.__atoms
 
     @property
-    def colvar(self):
+    def colvar1(self):
         """Return float colvar (dist2-dist1)/2"""
         atoms = self.atoms
         hydrogen = atoms[1]
         donor = atoms[0]
         axceptor = atoms[2]
-        colvar = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
-        return colvar
+        colvar1 = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
+        return colvar1
     
     @property
     def colvar2(self):
@@ -57,13 +57,13 @@ class Hydrogen_Bonds:
         return self.__h_bonds
 
     @property
-    def colvars_list(self):
-        """Return obj Colvars_Lists of list of one colvar"""
-        colvars_list = []
+    def colvars1_list(self):
+        """Return obj Colvars_Lists of list of colvar one"""
+        colvars1_list = []
         h_bonds = self.h_bonds
         for h_bond in h_bonds:
-            colvars_list.append(h_bond.colvar)
-        return Colvars_Lists(colvars_list)
+            colvars1_list.append(h_bond.colvar1)
+        return Colvars_Lists(colvars1_list)
 
 
 class Colvars_Lists:

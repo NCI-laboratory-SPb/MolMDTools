@@ -1,3 +1,4 @@
+import os
 import time
 
 from xyz_trajectory import XYZ_Trajectory
@@ -46,4 +47,5 @@ with open("BA_Z_anti_Z_anti_MTD.csv", "w") as file:
         file.write(next(data))
 
 ft = time.time()
+
 print(ft-st)
