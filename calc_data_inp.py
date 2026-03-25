@@ -122,7 +122,7 @@ class Calc_Data_Inp:
         atoms = molecule.atoms
 
         for i in atoms:
-            atoms_coordinates.append(f'{i.atom_name}    {'\t'.join((str(round(x, 13))).rjust(17) for x in i.coords)}')
+            atoms_coordinates.append(f"{i.atom_name}    "+"\t".join((str(round(x, 13))).rjust(17) for x in i.coords))
 
         lines = [f'%nprocshared={cores}', 
                  f'%mem={memory}GB', 

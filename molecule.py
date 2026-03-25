@@ -30,13 +30,18 @@ class Dist_Matrix:
 
         dists = []
         atoms = molecule.atoms
-        atoms_num = molecule.atoms_num
+        n = molecule.atoms_num
+
         for i, atom in enumerate(atoms):
             dists_from_i_atom = []
-            for j in range(0, i+1):
-                dists_from_i_atom.append(dists[j][i])
-            for j in range(i+1, atoms_num):
+            for j in range(0, i):
                 dists_from_i_atom.append(atom.distance(atoms[j]))
+            dists_from_i_atom.append(0)
+            dists.append(dists_from_i_atom)
+        
+        for i in range(0, n):
+            for j in range(i+1, n):
+                dists[i].append(dists[j][i])
 
         self.__dist_matrix = np.array(dists)
         
