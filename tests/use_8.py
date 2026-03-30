@@ -1,4 +1,4 @@
-from ncil_graphs import NCIL_Graph
+from ncil_graphs import NCIL_graph
 
 steps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
          10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
@@ -56,6 +56,7 @@ graph.add_line(steps, energy_system_1, label="System 1")
 graph.add_line(steps, energy_system_2, label="System 2")
 
 graph.set_labels("Step", "Energy (a.u.)")
+graph.enable_grid()
 graph.show_legend()
 
 graph.show()
