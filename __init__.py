@@ -50,4 +50,4 @@ from .molecule import Molecule
 from .xyz_trajectory import XYZ_Trajectory
 from .hydrogen_bond import Hydrogen_Bond, Hydrogen_Bonds
 from .calc_data_inp import Calc_Data_Inp
-from .science_plot import Science_Plot
+from .ncil_graphs import NCIL_Graph
