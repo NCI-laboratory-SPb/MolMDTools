@@ -41,6 +41,17 @@ class XYZ_Trajectory:
             random_ind_list.append(selected_step)
             new_steps.append(steps[selected_step])
         return XYZ_Trajectory(steps=new_steps)
+    
+    def subsystem_traj(self, atom_num_list):
+        """Return XYZ_Trajectory obj with steps with atoms from atom_num_list."""
+        steps = self.steps
+        new_steps = []
+        for step in steps:
+            new_atoms = []
+            for atom_num in atom_num_list:
+                new_atoms.append(step.atoms[atom_num])
+            new_steps.append(Molecule(atoms=new_atoms))
+        return XYZ_Trajectory(steps=new_steps)
 
     @staticmethod
     def xyz_traj_extr_from_xyz(file_path):
@@ -179,6 +190,19 @@ class XYZ_Trajectory:
         plt.show()
 
         return None
+    
+    def center_of_mass_list(self, start_step_num = None, final_step_num = None):
+        """Create list of tuples with center of mass coords and return list of tuples with center of mass coords."""
+        if start_step_num == None:
+            start_step_num = 0
+        if final_step_num == None:
+            final_step_num = self.steps_number
+        steps = self.steps[start_step_num:final_step_num+1]
+
+        center_of_mass_list = []
+        for step in steps:
+            center_of_mass_list.append(step.center_of_mass)
+        return center_of_mass_list
     
     def save(self, start_step_num = None, final_step_num = None, file_name = None):
         """Saving XYZ_Trajectory in .xyz file. Return Integer number of steps in saved trajectory."""

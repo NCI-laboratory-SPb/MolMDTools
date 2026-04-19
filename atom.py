@@ -2,6 +2,8 @@ import math
 
 import numpy as np
 
+from elements import ATOM_MASSES
+
 class Atom:
     """Class Atom.
     
@@ -9,13 +11,30 @@ class Atom:
     coords : list
     """
 
-    def __init__(self, atom_name='X', coords=[0.0, 0.0, 0.0]):
+    def __init__(self, atom_name='X', coords=[0.0, 0.0, 0.0], atom_mass=None):
         self.__atom_name = atom_name
+        self.__atom_mass = atom_mass
         self.__coords = coords
                                
     @property
     def atom_name(self):
         return self.__atom_name
+    
+    @property
+    def mass(self):
+        if self.__atom_mass is not None:
+            return self.__atom_mass
+        elif self.__atom_name in ATOM_MASSES:
+            atom_mass = ATOM_MASSES[self.__atom_name]["mass"]
+            self.__atom_mass = atom_mass
+            return atom_mass
+        else:
+            raise ValueError("Mass of atom {} is not defined".format(self.__atom_name))
+
+    @mass.setter
+    def mass(self, mass):
+        if mass > 0 and type(mass) in [int, float]:
+            self.__atom_mass = mass
 
     @property
     def coords(self):

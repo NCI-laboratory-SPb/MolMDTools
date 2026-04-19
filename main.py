@@ -1,61 +1,106 @@
-from ncil_graphs import NCIL_Graph
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
 
-steps = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-         10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+from xyz_trajectory import XYZ_Trajectory
 
-energy_system_1 = [
--100.02, -100.01, -100.03, -100.00, -99.98,
--100.01, -100.04, -100.02, -99.99, -100.00,
--100.03, -100.02, -100.01, -99.97, -100.00,
--100.02, -100.03, -100.01, -99.98, -100.00
-]
+file = r"E:\SPBU\Tolstoy_Lab\Cooperativity\Two_Bonds\Amidines\MTD\FIA_tors_angs_scan\Amidines_mtd-pos-1.xyz"
 
-energy_system_2 = [
--100.50, -100.48, -100.47, -100.49, -100.46,
--100.45, -100.47, -100.48, -100.46, -100.44,
--100.45, -100.46, -100.48, -100.49, -100.47,
--100.46, -100.45, -100.44, -100.46, -100.47
-]
+tj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file)
+tj1 = tj.subsystem_traj([0, 1, 2, 3, 4, 10, 11])
+tj2 = tj.subsystem_traj([5, 6, 7, 8, 9, 12, 13])
+print(len(tj1.steps))
+print(len(tj2.steps))
 
-distance_system_1 = [
-1.80, 1.81, 1.79, 1.82, 1.80,
-1.78, 1.79, 1.81, 1.80, 1.82,
-1.83, 1.81, 1.80, 1.79, 1.78,
-1.80, 1.81, 1.82, 1.80, 1.79
-]
 
-distance_system_2 = [
-2.00, 2.01, 2.02, 2.00, 1.99,
-2.01, 2.02, 2.03, 2.01, 2.00,
-2.02, 2.03, 2.01, 2.00, 1.99,
-2.01, 2.02, 2.03, 2.01, 2.00
-]
 
-r = [1.2, 1.3, 1.4, 1.5, 1.6,
-     1.7, 1.8, 1.9, 2.0, 2.1,
-     2.2, 2.3, 2.4, 2.5, 2.6,
-     2.7, 2.8, 2.9, 3.0]
 
-potential = [
-3.5, 2.8, 2.0, 1.3, 0.7,
-0.3, 0.0, 0.2, 0.5, 0.9,
-1.4, 2.0, 2.6, 3.3, 4.0,
-4.8, 5.6, 6.5, 7.5
-]
 
-force = [
--3.2, -2.5, -1.8, -1.1, -0.5,
--0.2, 0.0, 0.2, 0.6, 1.0,
-1.5, 2.1, 2.7, 3.4, 4.1,
-4.9, 5.8, 6.8, 7.9
-]
+torsion_angles_1 = tj1.torsion_angle_list(5, 0, 4, 3)
+torsion_angles_2 = tj2.torsion_angle_list(3, 4, 0, 5)
 
-graph = NCIL_Graph("Energy vs Steps")
+plt.scatter(torsion_angles_1, torsion_angles_2, s=1)
+plt.xlabel('Torsion angles of subsystem 1')
+plt.ylabel('Torsion angles of subsystem 2')
+plt.title('Correlation between torsion angles of two subsystems')
+plt.show()
 
-graph.add_line(steps, energy_system_1, label="System 1")
-graph.add_line(steps, energy_system_2, label="System 2")
 
-graph.set_labels("Step", "Energy (a.u.)")
-graph.show_legend()
 
-graph.show()
+
+
+centers_of_mass_1 = tj1.center_of_mass_list()
+centers_of_mass_2 = tj2.center_of_mass_list()
+difference = []
+for i in range(len(centers_of_mass_1)):
+    x_diff = centers_of_mass_1[i][0] - centers_of_mass_2[i][0]
+    y_diff = centers_of_mass_1[i][1] - centers_of_mass_2[i][1]
+    z_diff = centers_of_mass_1[i][2] - centers_of_mass_2[i][2]
+    difference.append((x_diff, y_diff, z_diff))
+
+points = np.array(difference)
+x, y, z = points.T
+kde = gaussian_kde(points.T)
+density = kde(points.T)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+scatter = ax.scatter(x, y, z, c=density)
+
+cbar = plt.colorbar(scatter)
+cbar.set_label('Density')
+
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+
+plt.show()
+
+
+
+
+
+c_coords_1 = [step.atoms[0].coords for step in tj1.steps]
+c_coords_2 = [step.atoms[0].coords for step in tj2.steps]
+vec1 = np.array(c_coords_1) - np.array(centers_of_mass_1)
+vec2 = np.array(c_coords_2) - np.array(centers_of_mass_2)
+vector_product = np.cross(vec1, vec2)
+vector_product_magnitudes = np.linalg.norm(vector_product, axis=1)
+vector_product = vector_product/vector_product_magnitudes[:, np.newaxis]
+
+x, y, z = vector_product.T
+
+theta = np.arccos(z)  
+phi = np.arctan2(y, x)  
+
+plt.figure()
+
+hb = plt.hexbin(
+    phi, theta,
+    gridsize=100,
+    cmap='viridis'
+)
+
+plt.colorbar(hb, label="Density")
+
+plt.xlabel("φ (azimuth)")
+plt.ylabel("θ (polar)")
+plt.title("Density on sphere (projection)")
+
+plt.show()
+
+
+fig = plt.figure()
+ax = fig.add_subplot(projection='mollweide')
+
+hb = ax.hexbin(
+    phi, np.pi/2 - theta,  
+    gridsize=100,
+    cmap='viridis'
+)
+
+plt.colorbar(hb, label="Density")
+
+ax.set_title("Spherical density (Mollweide projection)")
+
+plt.show()

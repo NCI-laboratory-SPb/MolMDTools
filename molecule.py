@@ -18,6 +18,23 @@ class Molecule:
     def atoms(self):
         return self.__atoms
     
+    @property
+    def center_of_mass(self):
+        """Return tuple of 3 floats - coords of center of mass of molecule"""
+        mass_sum = 0
+        x_sum = 0
+        y_sum = 0
+        z_sum = 0
+
+        for atom in self.__atoms:
+            atom_coords = atom.coords
+            mass_sum += atom.mass
+            x_sum += atom.mass * atom_coords[0]
+            y_sum += atom.mass * atom_coords[1]
+            z_sum += atom.mass * atom_coords[2]
+
+        return (x_sum / mass_sum, y_sum / mass_sum, z_sum / mass_sum)
+    
 
 class Dist_Matrix:
     """Class Dist_Matrix
