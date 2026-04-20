@@ -4,7 +4,7 @@ from scipy.stats import gaussian_kde
 
 from xyz_trajectory import XYZ_Trajectory
 
-file = r"E:\SPBU\Tolstoy_Lab\Cooperativity\Two_Bonds\Amidines\MTD\FIA_tors_angs_scan\Amidines_mtd-pos-1.xyz"
+file = r""
 
 tj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file)
 tj1 = tj.subsystem_traj([0, 1, 2, 3, 4, 10, 11])
