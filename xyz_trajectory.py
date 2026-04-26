@@ -84,7 +84,22 @@ class XYZ_Trajectory:
                     atoms.append(Atom(atom_name=atom_name, coords=coords))
                 steps.append(Molecule(atoms=atoms))
 
-        if len(data[1].split()) == 2 and 'converged=true' in data[1].lower():
+        elif len(data[1].split()) == 2 and 'converged=true' in data[1].lower():
+            num_atoms = int(data[0])
+            steps_num = int(len(data)/(num_atoms+2))
+            
+            for i in range(steps_num):
+                atoms = []
+                for j in range(num_atoms):
+                    atom_name = str(data[i*(2+num_atoms)+2+j].replace(',', '.').split()[0])
+                    coords = [float(data[i*(2+num_atoms)+2+j].replace(',', '.').split()[1]),
+                            float(data[i*(2+num_atoms)+2+j].split()[2]),
+                            float(data[i*(2+num_atoms)+2+j].split()[3])
+                            ]
+                    atoms.append(Atom(atom_name=atom_name, coords=coords))
+                steps.append(Molecule(atoms=atoms))
+
+        elif "Coordinates from ORCA" in data[1]:
             num_atoms = int(data[0])
             steps_num = int(len(data)/(num_atoms+2))
             
