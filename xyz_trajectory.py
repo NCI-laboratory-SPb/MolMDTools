@@ -28,6 +28,14 @@ class XYZ_Trajectory:
         """Return int"""
         return self.__steps_number
     
+    def cut_traj(self, start_step_num, final_step_num):
+        """Return XYZ_Trajectory obj with steps from start_step_num to final_step_num from old XYZ_Trajectory obj."""
+        steps = self.steps
+        new_steps = []
+        for i in range(start_step_num, final_step_num+1):
+            new_steps.append(steps[i])
+        return XYZ_Trajectory(steps=new_steps)
+    
     def random_steps(self, final_steps_number):
         """Return XYZ_Trajectory obj with random n steps from old XYZ_Trajectory obj"""
         steps = self.steps
@@ -63,9 +71,9 @@ class XYZ_Trajectory:
         return XYZ_Trajectory(steps=new_steps)
 
     @staticmethod
-    def xyz_traj_extr_from_xyz(file_path):
+    def xyz_traj_extr_from_xyz(file_name):
         """Reading .xyz file with MD trajectory and return obj Trajectory"""
-        file = open(file_path)
+        file = open(file_name)
         data = file.readlines()
         steps = []
 

@@ -1,11 +1,12 @@
 from xyz_trajectory import XYZ_Trajectory
 
-file = r"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\DAD_ADA\Conformers\ADD_DAA_Conformers_0.xyz"
-files = [f"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\DAD_ADA\Conformers\ADD_DAA_Conformers_{i}.xyz" for i in range(1, 30)]
-tj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file)
-tjs = [XYZ_Trajectory.xyz_traj_extr_from_xyz(file) for file in files]
-
-tj_sum = tj.sum_traj(tjs)
+path = r"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\ADD_DAA\MTD"
+file0 = "ADD-DAA-pos-1.xyz"
+file1 = r"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\ADD_DAA\ADD-DAA-pos-1.xyz"
+tj0 = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_name=path + "\\" + file0)
+tj1 = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_name=file1)
+tjs = [tj1]
+tj_sum = tj0.sum_traj(tjs)
 print(len(tj_sum.steps))
 
-tj_sum.save(file_name=r"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\DAD_ADA\Conformers\ADD_DAA_Conformers_all_opt_confs.xyz")
+tj_sum.save(file_name=r"D:\SPBU\Tolstoy_Lab\Cooperativity\Three_Bonds\ADD_DAA\ADD_DAA_closed_dimers_MTD_AIMD_sum.xyz")
