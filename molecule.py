@@ -7,9 +7,10 @@ class Molecule:
     atoms : list
     """
 
-    def __init__(self, atoms):
+    def __init__(self, atoms, cell=None):
         self.__atoms = atoms
-    
+        self.__cell = cell
+
     @property
     def atoms_num(self):
         return len(self.__atoms)
@@ -17,7 +18,16 @@ class Molecule:
     @property
     def atoms(self):
         return self.__atoms
+
+    @property
+    def cell(self):
+        return self.__cell
     
+    @cell.setter
+    def cell(self, cell):
+        if type(cell) == list and len(cell) == 3 and all(type(x) in [int, float] for x in cell):
+            self.__cell = cell
+
     @property
     def center_of_mass(self):
         """Return tuple of 3 floats - coords of center of mass of molecule"""

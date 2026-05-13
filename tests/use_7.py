@@ -9,7 +9,7 @@ st = time.time()
 Files_Translator.dump2xyz(filename="amidines_full.dump", final_filename="amidines_25ns.xyz")
 
 file_name = "amidines_25ns.xyz"
-traj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_name)
+traj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_name=file_name)
 
 print(len(traj.steps))
 

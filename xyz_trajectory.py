@@ -14,9 +14,10 @@ class XYZ_Trajectory:
     
     """
 
-    def __init__(self, steps):
+    def __init__(self, steps, cell=None):
         self.__steps = steps
         self.__steps_number = len(steps)
+        self.__cell = cell
 
     @property
     def steps(self):
@@ -28,14 +29,40 @@ class XYZ_Trajectory:
         """Return int"""
         return self.__steps_number
     
+    @property
+    def cell(self):
+        """Return list of floats"""
+        return self.__cell
+    
+    @cell.setter
+    def cell(self, cell):
+        if type(cell) == list and len(cell) == 3 and all(type(x) in [int, float] for x in cell):
+            for step in self.steps:
+                step.cell = cell
+            self.__cell = cell
+
+    def static_center_of_mass(self):
+        """Return obj XYZTrajectory with steps, which center of mass is zero."""
+        steps = self.steps
+        new_steps = []
+        for step in steps:
+            atoms = step.atoms
+            center_of_mass = step.center_of_mass
+            new_atoms = []
+            for atom in atoms:
+                new_coords = [atom.coords[0] - center_of_mass[0], atom.coords[1] - center_of_mass[1], atom.coords[2] - center_of_mass[2]]
+                new_atoms.append(Atom(atom_name=atom.atom_name, coords=new_coords, atom_mass=atom.mass))
+            new_steps.append(Molecule(atoms=new_atoms))
+        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
+    
     def cut_traj(self, start_step_num, final_step_num):
         """Return XYZ_Trajectory obj with steps from start_step_num to final_step_num from old XYZ_Trajectory obj."""
         steps = self.steps
         new_steps = []
         for i in range(start_step_num, final_step_num+1):
             new_steps.append(steps[i])
-        return XYZ_Trajectory(steps=new_steps)
-    
+        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
+
     def random_steps(self, final_steps_number):
         """Return XYZ_Trajectory obj with random n steps from old XYZ_Trajectory obj"""
         steps = self.steps
@@ -48,7 +75,7 @@ class XYZ_Trajectory:
                 selected_step = random.randint(0, steps_number)
             random_ind_list.append(selected_step)
             new_steps.append(steps[selected_step])
-        return XYZ_Trajectory(steps=new_steps)
+        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
     
     def sum_traj(self, trajs):
         """Return XYZ_Trajectory obj with steps from old XYZ_Trajectory obj and trajs list."""
@@ -57,7 +84,7 @@ class XYZ_Trajectory:
         for traj in trajs:
             for step in traj.steps:
                 new_steps.append(step)
-        return XYZ_Trajectory(steps=new_steps)
+        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
     
     def subsystem_traj(self, atom_num_list):
         """Return XYZ_Trajectory obj with steps with atoms from atom_num_list."""
@@ -68,7 +95,7 @@ class XYZ_Trajectory:
             for atom_num in atom_num_list:
                 new_atoms.append(step.atoms[atom_num])
             new_steps.append(Molecule(atoms=new_atoms))
-        return XYZ_Trajectory(steps=new_steps)
+        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
 
     @staticmethod
     def xyz_traj_extr_from_xyz(file_name):
@@ -123,7 +150,7 @@ class XYZ_Trajectory:
                 steps.append(Molecule(atoms=atoms))
 
         return XYZ_Trajectory(steps=steps)
-    
+
     def dist_list(self, atom1_num, atom2_num, start_step_num = None, final_step_num = None):
         """Create list of floats distances between atom1 and atom2 and return list of foat distances."""
         if start_step_num == None:
@@ -133,9 +160,15 @@ class XYZ_Trajectory:
         steps = self.steps[start_step_num:final_step_num+1]
 
         dist_list = []
-        for step in steps:
-            step_atoms = step.atoms
-            dist_list.append(step_atoms[atom1_num].distance(step_atoms[atom2_num]))
+
+        if self.cell == None:
+            for step in steps:
+                step_atoms = step.atoms
+                dist_list.append(step_atoms[atom1_num].distance(step_atoms[atom2_num]))
+        else:
+            for step in steps:
+                step_atoms = step.atoms
+                dist_list.append(step_atoms[atom1_num].distance(step_atoms[atom2_num], cell=self.cell))
         return dist_list
     
     def dist_plot(self, atom1_num, atom2_num, start_step_num=None, final_step_num=None, title=None, x_label="Steps", y_label=None, 
@@ -250,6 +283,29 @@ class XYZ_Trajectory:
         for step in steps:
             center_of_mass_list.append(step.center_of_mass)
         return center_of_mass_list
+    
+    @staticmethod
+    def periodic_boundary_conditions_traj(traj, cell):
+        """Return XYZ_Trajectory obj with steps with atoms coords in cell."""
+        steps = traj.steps
+        new_steps = []
+        for step in steps:
+            new_atoms = []
+            for atom in step.atoms:
+                coords = atom.coords
+                new_coords = [coords[0] % cell[0], coords[1] % cell[1], coords[2] % cell[2]]
+                new_atoms.append(Atom(atom_name=atom.atom_name, coords=new_coords, atom_mass=atom.mass))
+            atom1_coords = new_atoms[0].coords
+            for atom in new_atoms [1:]:
+                atom_coords = atom.coords
+                for i in range(3):
+                    if abs(atom_coords[i] - atom1_coords[i]) > cell[i]/2:
+                        if atom_coords[i] > atom1_coords[i]:
+                            atom_coords[i] -= cell[i]
+                        else:
+                            atom_coords[i] += cell[i]
+            new_steps.append(Molecule(atoms=new_atoms))
+        return XYZ_Trajectory(steps=new_steps, cell=cell)
     
     def save(self, start_step_num = None, final_step_num = None, file_name = None):
         """Saving XYZ_Trajectory in .xyz file. Return Integer number of steps in saved trajectory."""

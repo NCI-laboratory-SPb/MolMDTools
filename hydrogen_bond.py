@@ -125,10 +125,11 @@ class HB_Analyzer:
 
     def hb_in_structure(structure, atoms_nums):
         """Only for NHN H-bonds! structure - obj Molecule, atoms_nums = [atom-donor, H, axceptor HB]. Return True if HB in structure."""
-        donor = structure[atoms_nums[0]]
-        hydrogen = structure[atoms_nums[1]]
-        axceptor = structure[atoms_nums[2]]
-        if donor.distance(axceptor) <= 3.1 and Atom.angle(donor, hydrogen, axceptor) >= 150:
+        coords = structure.atoms
+        donor = coords[atoms_nums[0]]
+        hydrogen = coords[atoms_nums[1]]
+        axceptor = coords[atoms_nums[2]]
+        if donor.distance(axceptor, cell=structure.cell) <= 3.1 and Atom.angle(donor, hydrogen, axceptor, cell=structure.cell) >= 150:
             return True
         else:
             return False
@@ -137,8 +138,8 @@ class HB_Analyzer:
         """Only for NHN H-bonds! traj - obj XYZTrajectory, atoms_nums = [atom-donor, H, axceptor HB]. Return list nums of structures in XYZTrajectory with HB."""
         steps = traj.steps
         steps_with_HB = []
-        for step, ind in enumerate(steps):
-            if HB_Analyzer.hb_in_structure(step.atoms, atoms_nums=atoms_nums):
+        for ind, step in enumerate(steps):
+            if HB_Analyzer.hb_in_structure(step, atoms_nums=atoms_nums):
                 steps_with_HB.append(ind)
             
         return steps_with_HB
