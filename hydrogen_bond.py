@@ -129,7 +129,7 @@ class HB_Analyzer:
         donor = coords[atoms_nums[0]]
         hydrogen = coords[atoms_nums[1]]
         axceptor = coords[atoms_nums[2]]
-        if donor.distance(axceptor, cell=structure.cell) <= 3.1 and Atom.angle(donor, hydrogen, axceptor, cell=structure.cell) >= 150:
+        if donor.distance(hydrogen, cell=structure.cell) <= 2.75 and axceptor.distance(hydrogen, cell=structure.cell) <= 2.75 and Atom.angle(donor, hydrogen, axceptor, cell=structure.cell) >= 150:
             return True
         else:
             return False
