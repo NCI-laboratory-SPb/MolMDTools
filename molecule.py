@@ -62,7 +62,7 @@ class Dist_Matrix:
         for i, atom in enumerate(atoms):
             dists_from_i_atom = []
             for j in range(0, i):
-                dists_from_i_atom.append(atom.distance(atoms[j]))
+                dists_from_i_atom.append(atom.dist(atoms[j]))
             dists_from_i_atom.append(0)
             dists.append(dists_from_i_atom)
         

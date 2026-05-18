@@ -5,22 +5,22 @@ from atom import Atom
 def test_atom_distance_0():
     a1 = Atom(coords=[3.1, 55.33, 6.05])
     a2 = Atom(coords=[3.1, 55.33, 6.05])
-    assert a1.distance(a2) == 0
+    assert a1.dist(a2) == 0
 
 def test_atom_distance_1():
     a1 = Atom(coords=[-1.2, 0, 0])
     a2 = Atom(coords=[1, 0, 0])
-    assert a1.distance(a2) == 2.2
+    assert a1.dist(a2) == 2.2
 
 def test_atom_distance_2():
     a1 = Atom(coords=[0, -1.2, 0])
     a2 = Atom(coords=[0, 1, 0])
-    assert a1.distance(a2) == 2.2
+    assert a1.dist(a2) == 2.2
 
 def test_atom_distance_1():
     a1 = Atom(coords=[0, 0, -1.2])
     a2 = Atom(coords=[0, 0, 1])
-    assert a1.distance(a2) == 2.2
+    assert a1.dist(a2) == 2.2
 
 def test_atom_angle_0():
     a1 = Atom(coords=[0, 0, 0])

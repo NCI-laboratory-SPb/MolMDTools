@@ -28,7 +28,7 @@ class Hydrogen_Bond:
         hydrogen = atoms[1]
         donor = atoms[0]
         axceptor = atoms[2]
-        colvar1 = (hydrogen.distance(donor)-hydrogen.distance(axceptor))/2
+        colvar1 = (hydrogen.dist(donor)-hydrogen.dist(axceptor))/2
         return colvar1
     
     @property
@@ -38,7 +38,7 @@ class Hydrogen_Bond:
         hydrogen = atoms[1]
         donor = atoms[0]
         axceptor = atoms[2]
-        colvar2 = (hydrogen.distance(donor)+hydrogen.distance(axceptor))/2
+        colvar2 = (hydrogen.dist(donor)+hydrogen.dist(axceptor))/2
         return colvar2
     
 
@@ -129,7 +129,7 @@ class HB_Analyzer:
         donor = coords[atoms_nums[0]]
         hydrogen = coords[atoms_nums[1]]
         axceptor = coords[atoms_nums[2]]
-        if donor.distance(hydrogen, cell=structure.cell) <= 2.75 and axceptor.distance(hydrogen, cell=structure.cell) <= 2.75 and Atom.angle(donor, hydrogen, axceptor, cell=structure.cell) >= 150:
+        if donor.dist(hydrogen, cell=structure.cell) <= 2.75 and axceptor.dist(hydrogen, cell=structure.cell) <= 2.75 and Atom.angle(donor, hydrogen, axceptor, cell=structure.cell) >= 150:
             return True
         else:
             return False

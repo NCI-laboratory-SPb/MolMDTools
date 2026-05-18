@@ -41,7 +41,7 @@ class Atom:
         """Return list of coords"""
         return self.__coords
     
-    def distance(self, other, cell=None):
+    def dist(self, other, cell=None):
         """Cell - list of float. Return evklid distance between two Atoms"""
         if cell == None:
             other_coords = other.coords

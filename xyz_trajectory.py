@@ -164,11 +164,11 @@ class XYZ_Trajectory:
         if self.cell == None:
             for step in steps:
                 step_atoms = step.atoms
-                dist_list.append(step_atoms[atom1_num].distance(step_atoms[atom2_num]))
+                dist_list.append(step_atoms[atom1_num].dist(step_atoms[atom2_num]))
         else:
             for step in steps:
                 step_atoms = step.atoms
-                dist_list.append(step_atoms[atom1_num].distance(step_atoms[atom2_num], cell=self.cell))
+                dist_list.append(step_atoms[atom1_num].dist(step_atoms[atom2_num], cell=self.cell))
         return dist_list
     
     def dist_plot(self, atom1_num, atom2_num, start_step_num=None, final_step_num=None, title=None, x_label="Steps", y_label=None, 
