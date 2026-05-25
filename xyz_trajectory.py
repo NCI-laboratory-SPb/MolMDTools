@@ -98,7 +98,7 @@ class XYZ_Trajectory:
         return XYZ_Trajectory(steps=new_steps, cell=self.cell)
 
     @staticmethod
-    def xyz_traj_extr_from_xyz(file_name):
+    def extr_from_xyz(file_name):
         """Reading .xyz file with MD trajectory and return obj Trajectory"""
         file = open(file_name)
         data = file.readlines()
