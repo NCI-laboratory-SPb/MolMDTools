@@ -5,7 +5,7 @@ from files_translator import Files_Translator
 st = time.time()
 
 core = ""
-files = ["amidines_2.dump", "amidines_3.dump", "amidines_4.dump", "amidines_5.dump"]
+files = ["file.dump", "file1.dump", "file2.dump", "file3.dump"]
 
 for file in files:
     Files_Translator.dump2xyz(filename=core+file)

@@ -4,9 +4,9 @@ from scipy.stats import gaussian_kde
 
 from xyz_trajectory import XYZ_Trajectory
 
-file = r""
+file = r"file.xyz"
 
-tj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file)
+tj = XYZ_Trajectory.extr_from_xyz(file)
 tj1 = tj.subsystem_traj([0, 1, 2, 3, 4, 10, 11])
 tj2 = tj.subsystem_traj([5, 6, 7, 8, 9, 12, 13])
 print(len(tj1.steps))

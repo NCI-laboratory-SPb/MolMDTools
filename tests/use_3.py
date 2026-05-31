@@ -5,10 +5,10 @@ import numpy as np
 
 from xyz_trajectory import XYZ_Trajectory
 
-file_path = "E:/SPBU/FQW/Program_review/formimidamide_340000_360000.xyz"
+file_path = "file.xyz"
 file_dir = os.path.dirname(file_path)
 
-Trajectory = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+Trajectory = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 
 fig, axes = plt.subplots(8, 1, figsize=(10, 20))
 

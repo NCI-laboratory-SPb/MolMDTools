@@ -46,8 +46,24 @@ licence = ""
 url = ""
 
 from .atom import Atom
-from .molecule import Molecule
+from .molecule import Molecule, Dist_Matrix
 from .xyz_trajectory import XYZ_Trajectory
-from .hydrogen_bond import Hydrogen_Bond, Hydrogen_Bonds
+from .files_translator import Files_Translator
+from .hydrogen_bond import Hydrogen_Bond, Hydrogen_Bonds, Colvars_Lists, HB_Analyzer
 from .calc_data_inp import Calc_Data_Inp
 from .ncil_graphs import NCIL_Graph
+
+
+__all__ = [
+    "Atom",
+    "Molecule",
+    "Dist_Matrix",
+    "XYZ_Trajectory",
+    "Files_Translator",
+    "Hydrogen_Bond",
+    "Hydrogen_Bonds",
+    "Colvars_Lists",
+    "HB_Analyzer",
+    "Calc_Data_Inp",
+    "NCIL_Graph",
+]

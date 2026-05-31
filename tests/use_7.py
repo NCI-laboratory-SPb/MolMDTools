@@ -6,10 +6,10 @@ from files_translator import Files_Translator
 
 st = time.time()
 
-Files_Translator.dump2xyz(filename="amidines_full.dump", final_filename="amidines_25ns.xyz")
+Files_Translator.dump2xyz(filename="file_start.dump", final_filename="file_final.xyz")
 
-file_name = "amidines_25ns.xyz"
-traj = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_name=file_name)
+file_name = "file.xyz"
+traj = XYZ_Trajectory.extr_from_xyz(file_name=file_name)
 
 print(len(traj.steps))
 

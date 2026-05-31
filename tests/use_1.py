@@ -6,10 +6,10 @@ import numpy as np
 from xyz_trajectory import XYZ_Trajectory
 from hydrogen_bond import Hydrogen_Bond
 
-file_path = '/home/mark/Desktop/VladimirR/Amidines/MLP/amidines.xyz'
+file_path = 'file.xyz'
 file_dir = os.path.dirname(file_path)
 
-Trajectory = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+Trajectory = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 
 steps = Trajectory.steps
 

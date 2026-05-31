@@ -4,9 +4,9 @@ from xyz_trajectory import XYZ_Trajectory
 from hydrogen_bond import Hydrogen_Bonds, Hydrogen_Bond, Colvars_Lists
 
 st = time.time()
-file_path = r"/home/mark/Desktop/VladimirR/Cooperativity_MLP/Two_Bonds/Benzamidines/Eanti_Eanti_MTD-pos-1.xyz"
+file_path = r"file.xyz"
 
-xyz_tr = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+xyz_tr = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 hbs1_list = []
 hbs2_list = []
 for mol in xyz_tr.steps:
@@ -24,9 +24,9 @@ ft = time.time()
 clvs = Colvars_Lists([clv1.colvars_lsts, clv2.colvars_lsts])
 clvs.colvars_plot()
 
-file_path = r"Esyn_Zanti_MTD-pos-1.xyz"
+file_path = r"file1.xyz"
 
-xyz_tr = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+xyz_tr = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 hbs_list = []
 
 for mol in xyz_tr.steps:
@@ -37,9 +37,9 @@ hbs_list = Hydrogen_Bonds(hbs_list)
 clv = hbs_list.colvars_list
 clv.colvars_plot()
 
-file_path = r"Zanti_Zanti_MTD-pos-1.xyz"
+file_path = r"file2.xyz"
 
-xyz_tr = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+xyz_tr = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 hbs_list = []
 
 for mol in xyz_tr.steps:
@@ -50,9 +50,9 @@ hbs_list = Hydrogen_Bonds(hbs_list)
 clv = hbs_list.colvars_list
 clv.colvars_plot()
 
-file_path = r"Zanti_Zsyn_MTD-pos-1.xyz"
+file_path = r"file3.xyz"
 
-xyz_tr = XYZ_Trajectory.xyz_traj_extr_from_xyz(file_path=file_path)
+xyz_tr = XYZ_Trajectory.extr_from_xyz(file_path=file_path)
 hbs_list = []
 
 for mol in xyz_tr.steps:

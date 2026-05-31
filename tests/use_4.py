@@ -3,7 +3,7 @@ import time
 from files_translator import Files_Translator
 
 st = time.time()
-file_path = r"amidines_1.dump"
+file_path = r"file.dump"
 
 Files_Translator.dump2xyz(file_path)
 
