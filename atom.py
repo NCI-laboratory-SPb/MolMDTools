@@ -2,6 +2,7 @@ import math
 
 import numpy as np
 
+from molecule import Molecule
 from elements import ATOM_MASSES
 
 class Atom:
@@ -15,6 +16,16 @@ class Atom:
         self.__atom_name = atom_name
         self.__atom_mass = atom_mass
         self.__coords = coords
+
+    def __add__(self, other):
+        if type(other)==Atom:
+            return Molecule(atoms=[self, other])
+        elif type(other)==Molecule:
+            mol1_atoms = other.atoms
+            atoms = mol1_atoms.append(self)
+            return Molecule(atoms=atoms)
+        else:
+            raise ArithmeticError("The type of the object being added must be \"Atom\" or \"Molecule.\"")
                                
     @property
     def atom_name(self):

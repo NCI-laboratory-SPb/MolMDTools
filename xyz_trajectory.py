@@ -19,6 +19,16 @@ class XYZ_Trajectory:
         self.__steps_number = len(steps)
         self.__cell = cell
 
+    def __add__(self, other):
+        if type(other)==XYZ_Trajectory:
+            new_steps = []
+            new_steps.extend(self.steps)
+            for step in other.steps:
+                new_steps.append(step)
+            return XYZ_Trajectory(steps=new_steps, cell=self.cell)
+        else:
+            raise ArithmeticError("The type of the object being added must be \"XYZ_Trajectory\".")
+
     @property
     def steps(self):
         """Return list of objs Molecule"""
@@ -40,6 +50,9 @@ class XYZ_Trajectory:
             for step in self.steps:
                 step.cell = cell
             self.__cell = cell
+
+    def copy(self):
+        return XYZ_Trajectory(steps=self.steps, cell=self.cell)
 
     def static_center_of_mass(self):
         """Return obj XYZTrajectory with steps, which center of mass is zero."""
@@ -79,12 +92,10 @@ class XYZ_Trajectory:
     
     def sum_traj(self, trajs):
         """Return XYZ_Trajectory obj with steps from old XYZ_Trajectory obj and trajs list."""
-        new_steps = []
-        new_steps.extend(self.steps)
+        new_traj = self.copy()
         for traj in trajs:
-            for step in traj.steps:
-                new_steps.append(step)
-        return XYZ_Trajectory(steps=new_steps, cell=self.cell)
+            new_traj+=traj
+        return new_traj
     
     def subsystem_traj(self, atom_num_list):
         """Return XYZ_Trajectory obj with steps with atoms from atom_num_list."""
