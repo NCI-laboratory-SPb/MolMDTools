@@ -1,7 +1,5 @@
 import numpy as np
 
-from atom import Atom
-
 
 class Molecule:
     """Class Molecule.
@@ -15,12 +13,10 @@ class Molecule:
         self.__cell = cell
 
     def __add__(self, other):
-        if type(other)==Atom:
-            return Molecule(self.atoms.append(other)) 
-        elif type(other)==Molecule:
+        if type(other)==Molecule:
             return Molecule(self.atoms+other.atoms)
         else:
-            raise ArithmeticError("The type of the object being added must be \"Atom\" or \"Molecule.\"")
+            return NotImplemented
 
     @property
     def atoms_num(self):

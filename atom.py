@@ -22,10 +22,13 @@ class Atom:
             return Molecule(atoms=[self, other])
         elif type(other)==Molecule:
             mol1_atoms = other.atoms
-            atoms = mol1_atoms.append(self)
+            atoms = mol1_atoms+[self, ]
             return Molecule(atoms=atoms)
         else:
             raise ArithmeticError("The type of the object being added must be \"Atom\" or \"Molecule.\"")
+        
+    def __radd__(self, other):
+        return self+other
                                
     @property
     def atom_name(self):

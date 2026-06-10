@@ -22,3 +22,15 @@ def test_dist_matrix():
     dists_matrix = Dist_Matrix(molecule)
     expected = np.array([[0, 1.73, 1.73], [1.73, 0, 2.83], [1.73, 2.83, 0]])
     assert np.allclose(dists_matrix.dist_matrix, expected, atol=0.01)
+
+def test_molecule_plus_molecule():
+    a0 = Atom(coords=[0, 0, 0])
+    a1 = Atom(coords=[1, 1, 1])
+    a2 = Atom(coords=[1, -1, -1])
+    a3 = Atom(coords=[2, 1, 0])
+    mol1 = Molecule([a0, a1])
+    mol2 = Molecule([a2, a3])
+    mol3 = Molecule([a0, a1, a2, a3])
+    atoms_coords_1 = [x.coords for x in (mol1 + mol2).atoms]
+    atoms_coords_2 = [x.coords for x in mol3.atoms]
+    assert atoms_coords_1==atoms_coords_2

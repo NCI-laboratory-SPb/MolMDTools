@@ -1,6 +1,8 @@
 import pytest
+import math
 
 from atom import Atom
+from molecule import Molecule
 
 def test_atom_distance_0():
     a1 = Atom(coords=[3.1, 55.33, 6.05])
@@ -65,7 +67,6 @@ def test_atom_angle_150():
     assert Atom.angle(a2, a1, a3) == pytest.approx(150.0)
 
 def test_atom_angle_7_5():
-    import math
     angle_rad = math.radians(7.5)
     x = math.cos(angle_rad)
     y = math.sin(angle_rad)
@@ -73,3 +74,27 @@ def test_atom_angle_7_5():
     a2 = Atom(coords=[1, 0, 0])
     a3 = Atom(coords=[x, y, 0])
     assert Atom.angle(a2, a1, a3) == pytest.approx(7.5)
+
+def test_atom_plus_atom():
+    a0 = Atom(coords=[0, 0, 0])
+    a1 = Atom(coords=[1, 1, 1])
+    mol = Molecule(atoms=[a0, a1])
+    assert [atom.coords for atom in (a0 + a1).atoms]==[atom.coords for atom in mol.atoms]
+
+def test_atom_plus_molecule():
+    a0 = Atom(coords=[0, 0, 0])
+    a1 = Atom(coords=[1, 1, 1])
+    a2 = Atom(coords=[1, -1, -1])
+    mol = a0 + a1
+    mol1 = a2 + mol
+    mol2 = Molecule(atoms=[a0, a1, a2])
+    assert [atom.coords for atom in mol1.atoms]==[atom.coords for atom in mol2.atoms]
+
+def test_molecule_plus_atom():
+    a0 = Atom(coords=[0, 0, 0])
+    a1 = Atom(coords=[1, 1, 1])
+    a2 = Atom(coords=[1, -1, -1])
+    mol = a0 + a1
+    mol1 = mol + a2
+    mol2 = Molecule(atoms=[a0, a1, a2])
+    assert [atom.coords for atom in mol1.atoms]==[atom.coords for atom in mol2.atoms]
