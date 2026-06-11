@@ -18,6 +18,27 @@ class Molecule:
         else:
             return NotImplemented
 
+    def __check_atom_indx(self, indx):
+        if type(indx)!=int:
+            raise IndexError("The atom index must be an integer.")
+        atoms_num = self.atoms_num
+        if indx<-atoms_num or indx>=atoms_num:
+            raise IndexError("The atom index is out of range.")
+
+    def __getitem__(self, indx):
+        self.__check_atom_indx(indx)
+        return self.atoms[indx]
+    
+    def __setitem__(self, indx, atom):
+        from atom import Atom
+        self.__check_atom_indx(indx)
+        if type(atom)!=Atom:
+            raise TypeError("The new object must be of type Atom.")
+        self.__atoms[indx] = atom
+
+    def __delitem__(self, indx):
+        self.__atoms.pop(indx)
+
     @property
     def atoms_num(self):
         return len(self.__atoms)
