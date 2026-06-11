@@ -28,6 +28,23 @@ class XYZ_Trajectory:
             return XYZ_Trajectory(steps=new_steps, cell=self.cell)
         else:
             raise ArithmeticError("The type of the object being added must be \"XYZ_Trajectory\".")
+        
+    def __check_step_indx(self, indx):
+        if type(indx)!=int:
+            raise IndexError("The step index must be an integer.")
+        steps_num = self.steps_number
+        if indx<-steps_num or indx>=steps_num:
+            raise IndexError("The step index is out of range.")
+
+    def __getitem__(self, indx):
+        self.__check_step_indx(indx)
+        return self.steps[indx]
+    
+    def __setitem__(self, indx, step):
+        self.__check_step_indx(indx)
+        if type(step)!=Molecule:
+            raise TypeError("The new step must be of type Molecule.")
+        self.__steps[indx] = step
 
     @property
     def steps(self):
