@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from atom import Atom
-from molecule import Molecule, Dist_Matrix
+from molmdtools.atom import Atom
+from molmdtools.molecule import Molecule, Dist_Matrix
 
 def test_molecule():
     a0 = Atom(coords=[0, 0, 0])

@@ -1,7 +1,7 @@
 import time
 
-from xyz_trajectory import XYZ_Trajectory
-from hydrogen_bond import Hydrogen_Bonds, Hydrogen_Bond, Colvars_Lists
+from molmdtools.xyz_trajectory import XYZ_Trajectory
+from molmdtools.hydrogen_bond import Hydrogen_Bonds, Hydrogen_Bond, Colvars_Lists
 
 st = time.time()
 file_path = r"file.xyz"

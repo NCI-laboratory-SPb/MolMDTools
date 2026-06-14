@@ -1,8 +1,8 @@
 import pytest
 
-from atom import Atom
-from molecule import Molecule
-from xyz_trajectory import XYZ_Trajectory
+from molmdtools.atom import Atom
+from molmdtools.molecule import Molecule
+from molmdtools.xyz_trajectory import XYZ_Trajectory
 
 def test_xyz_tr_extr_from_xyz(tmp_path):
     start_file = "3\ntime\nH    -2.11968    -1.87182    -0.002648\nN    -1.50337    -1.07376    -0.000902\n1    2.00786    -0.173672    -0.000872\n3\ntime\nH    -1.97684    -1.95986    -0.312353\nN    -1.40654    -1.09467    -0.118242\nC    1.95467    -0.123764    0.000745741\n3\ntime\nH    -1.95676    -1.87078    -0.692757\nN    -1.52083    -1.10294    -0.25781\nC    2.11268    -0.0648747    0.109822"

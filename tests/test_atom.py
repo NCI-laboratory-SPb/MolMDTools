@@ -1,8 +1,8 @@
 import pytest
 import math
 
-from atom import Atom
-from molecule import Molecule
+from molmdtools.atom import Atom
+from molmdtools.molecule import Molecule
 
 def test_atom_distance_0():
     a1 = Atom(coords=[3.1, 55.33, 6.05])

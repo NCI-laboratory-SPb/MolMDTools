@@ -3,8 +3,8 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from xyz_trajectory import XYZ_Trajectory
-from hydrogen_bond import Hydrogen_Bond
+from molmdtools.xyz_trajectory import XYZ_Trajectory
+from molmdtools.hydrogen_bond import Hydrogen_Bond
 
 file_path = 'file.xyz'
 file_dir = os.path.dirname(file_path)

@@ -3,7 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from xyz_trajectory import XYZ_Trajectory
+from molmdtools.xyz_trajectory import XYZ_Trajectory
 
 file_path = "file.xyz"
 file_dir = os.path.dirname(file_path)

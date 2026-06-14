@@ -1,4 +1,4 @@
-from xyz_trajectory import XYZ_Trajectory
+from molmdtools.xyz_trajectory import XYZ_Trajectory
 
 file_path = "file.xyz"
 

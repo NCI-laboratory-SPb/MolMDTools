@@ -1,6 +1,6 @@
 import time
 
-from files_translator import Files_Translator
+from molmdtools.files_translator import Files_Translator
 
 st = time.time()
 
