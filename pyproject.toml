@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molmdtools"
+version = "0.1.0"
+description = "Tools for molecular dynamics trajectory analysis, hydrogen bond characterization and quantum chemistry workflows."
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "Vladimir Rogachevskii", email = "vladimir.rogachevskij@gmail.com"}
+]
+keywords = [
+    "computational chemistry",
+    "molecular dynamics",
+    "quantum chemistry",
+    "hydrogen bond",
+    "trajectory analysis",
+    "chemistry"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Chemistry",
+	"Topic :: Scientific/Engineering :: Physics",
+	"Operating System :: OS Independent"
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "seaborn"
+]
+
+[project.urls]
+Repository = "https://github.com/NCI-laboratory-SPb/molmdtools"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["molmdtools*"]
+
+[tool.setuptools.package-data]
+molmdtools = ["data/*.json"]
